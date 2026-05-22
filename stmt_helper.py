@@ -66,16 +66,20 @@ class number(elem):
     def add_funcID(self, id:str) -> None:
         pass
 
+# Updated the variable class
 class variable(elem):
     def __init__(self, varName:str) -> None:
         self.varName = varName
         self.elemType = elem_types.VAR
+        self.is_global = False # ADDED THIS FLAG TO IDENTIFY GLOBAL VARIABLES
         
     def get_display_value(self) -> str:
         return self.varName
     
     def add_funcID(self, id:str) -> None:
-        self.varName = self.varName+id
+        #  UPDATED TO PREVENT MANGLING GLOBALS
+        if not getattr(self, 'is_global', False): 
+            self.varName = self.varName+id
 
 #TODO
 class boolExp(elem):
@@ -96,6 +100,7 @@ class pointer(variable):
     def __init__(self, var:variable) -> None:
         variable.__init__(self, var.varName)
         self.elemType = elem_types.PTR
+        self.is_global = getattr(var, 'is_global', False) # ADDED THIS FLAG
         
     def get_display_value(self) -> str:
         return '*'+self.varName
@@ -105,6 +110,7 @@ class field(variable):
         variable.__init__(self, var.varName)
         self.fld = fld.varName
         self.elemType = elem_types.FLD
+        self.is_global = getattr(var, 'is_global', False) # ADDED THIS FLAG
         
     def get_display_value(self) -> str:
         return self.varName+'.'+self.fld
@@ -121,6 +127,7 @@ class address(variable):
     def __init__(self, var:variable) -> None:
         variable.__init__(self, var.varName)
         self.elemType = elem_types.ADR
+        self.is_global = getattr(var, 'is_global', False) # ADDED THIS FLAG
         
     def get_display_value(self) -> str:
         return '&'+self.varName
@@ -184,11 +191,15 @@ class use(stmt):
     def __init__(self, var:variable) -> None:
         self.varName = var.varName
         self.stmtType = stmt_types.USE
+        self.is_global = getattr(var, 'is_global', False) # ADDED THIS FLAG
 
     def get_display_stmt(self) -> str:
         return ('use '+self.varName)
     
     def add_funcID(self, id:str) -> None:
+        # CHECK FLAG BEFORE MANGLING
+        if not getattr(self, 'is_global', False):
+            self.varName = self.varName+id
         self.varName = self.varName+id
 
 class goto(stmt):

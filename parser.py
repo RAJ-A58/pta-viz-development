@@ -24,6 +24,11 @@ deffunclist = set()
 funcdict = {}
 usedfunclist = set()
 
+# For global pointers and variables
+global_varlist = set()   # Stores names of all declared global variables
+global_vardict = {}      # Maps global variables to their types (e.g., 'scalar*')
+is_global_scope = True   # State flag tracking whether we are currently in global block
+
 # Used for error checking
 varlist = set()
 structdict = {'scalar':[{},set()]}
@@ -42,10 +47,14 @@ def prepare_next_function():
 
 def checkvar(var:variable):
     varName = var.get_display_value()
-    if varName not in varlist:
+    if varName in vardict:
+        return vardict[varName]
+    elif varName in global_vardict:
+        var.is_global = True  # <-- ADD THIS LINE
+        return global_vardict[varName]
+    else:
         raise Exception("Variable '"+ varName +"' used without initialization, at line number "+ str(lno))
-    return vardict[varName]
-
+    
 def checktype(var:variable, typ:str):
     if checkvar(var) != typ:
         raise Exception("Type Error: Variable '"+ var.get_display_value() +"' expected to be '"+ typ +"', but got '"+ vardict[var.get_display_value()] +"' instead, at line number "+ str(lno))
@@ -175,12 +184,23 @@ def p_var_dec(p):
     else:
         typ = p[1].get_display_value()
         lst = p[3]
-    if varlist.intersection(lst):
-        raise Exception("Redeclaration of variable/s "+str(varlist.intersection(lst))+" at line number "+str(lno))
-    usedstructlist.add(typ)
-    for elem in lst:
-        vardict[elem] = typ
-    varlist.update(lst)
+        
+    global is_global_scope
+    if is_global_scope:
+        if global_varlist.intersection(lst):
+            raise Exception("Redeclaration of global variable/s "+str(global_varlist.intersection(lst))+" at line number "+str(lno))
+        for elem in lst:
+            global_vardict[elem] = typ
+        global_varlist.update(lst)
+    else:
+        if varlist.intersection(lst).union(global_varlist.intersection(lst)):
+            raise Exception("Redeclaration of variable/s "+str(lst)+" at line number "+str(lno))
+        for elem in lst:
+            vardict[elem] = typ
+        varlist.update(lst)
+        
+    usedstructlist.add(p[1].get_display_value())
+    p[0] = { 'type': typ, 'vars': lst }
 
 def p_stmt(p):
     '''stmt : vardec
@@ -203,8 +223,13 @@ def p_stmt(p):
                     raise Exception("Malloc can only be called when lhs is a pointer, at line "+str(lno))
                 elem = '$o'+str(lno)
                 p[5] = [p[1][0], malloc(elem)]
-                vardict[elem] = p[1][0][:-1]
-                varlist.add(elem)
+                
+                if p[1][1].get_display_value() in global_vardict:
+                    global_vardict[elem] = p[1][0][:-1]
+                    global_varlist.add(elem)
+                else:
+                    vardict[elem] = p[1][0][:-1]
+                    varlist.add(elem)
 
         if p[1][0] != p[5][0]:
             raise Exception("Type Mismatch: LHS type - '"+p[1][0]+"', RHS type - '"+p[5][0]+"' on assignment statement at line "+str(lno))
@@ -315,6 +340,10 @@ def p_func(p):
     '''func : FUNCS ":"
             | func nl VARNAME funcparams spnl "{" spnl funcbody spnl "}"
             | func nl VARNAME funcparams spnl "{" spnl "}"'''
+    if len(p) == 3:
+        global is_global_scope
+        is_global_scope = False   # Shift context out of global scope space into functions
+
     if len(p) != 3:
         func_uid = p[3].get_display_value()+param_to_string(p[4][0])
         if func_uid in deffunclist:
@@ -390,8 +419,16 @@ def p_structs(p):
         structdict[structName] = [{}, set()]
         defstructlist.add(structName)
 
+def p_global_sec(p):
+    '''global_sec : spnl GLOBALS ":" nl
+                  | global_sec vardec nl
+                  | global_sec nl'''
+    if len(p) > 1:
+        p[0] = p[1]
+
 def p_prog(p):
-    '''prog : structs func tac spnl'''
+    '''prog : structs global_sec func tac spnl
+            | structs func tac spnl''' 
 
 def p_error(p):
     if p:
@@ -418,19 +455,26 @@ def reset():
     deffunclist.clear()
     funcdict.clear()
     usedfunclist.clear()
+    
+    # Clears global variables and pointers when parsing a new file or text
+    global_varlist.clear()
+    global_vardict.clear()
+    
+    global is_global_scope
+    is_global_scope = True
 
     varlist.clear()
     structdict.clear()
     structdict['scalar'] = [{},set()]
 
     vardict.clear()
-
+    
 def parse_file(file_name):
     try:
         f = open(file_name, 'r')
         s = f.read()
     except EOFError:
-        return ("Error while loading the file", {'main' : 'error'})
+        return ("Error while loading the file", {'main' : 'error'}, {})
     
     return parse_text(s)
 
@@ -441,17 +485,21 @@ def parse_text(s):
         parser.restart()
         funcdict['main'] = [[], vardict, clean_statements()]
     except Exception as X:
-        return (str(X), {'main' : 'error'})
+        return (str(X), {'main' : 'error'}, {})
     
     if usedfunclist - deffunclist:
-        return ("Function/s " + str(usedfunclist - deffunclist) + " used without definition", {'main' : 'error'})
-    return (structdict, funcdict)
+        return ("Function/s " + str(usedfunclist - deffunclist) + " used without definition", {'main' : 'error'}, {})
+    
+    # Returns global_vardict alongside structdict and funcdict
+    return (structdict, funcdict, global_vardict)
 
 
 if __name__ == "__main__":
-    structdict, funcdict = parse_file("test3.txt")
+    structdict, funcdict, globalvardict = parse_file("test3.txt")
     print("structdict")
     print(structdict)
+    print("globalvardict")
+    print(globalvardict)
     print("Stmts")
     for key, val in funcdict.items():
         print(key)

@@ -3,6 +3,7 @@ from stmt_helper import *
 # from ply.lex import TOKEN
 
 # Tokens
+# Updated the reserved dictionary
 reserved  = {
     'if' : 'IF',
     'goto' : 'GOTO',
@@ -12,7 +13,8 @@ reserved  = {
     'funcs' : 'FUNCS',
     'main' : 'MAINCODE',
     'call' : 'CALL',
-    'malloc' : 'MALLOC'
+    'malloc' : 'MALLOC',
+    'globals' : 'GLOBALS'  #  ADDED THIS LINE
 }
 tokens = ['VARNAME', 'NUMBER', 'SPACES', 'NEWLINE', 'LTE', 'GTE', 'STARS'] + list(reserved.values())
 
