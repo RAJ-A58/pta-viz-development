@@ -1,0 +1,6 @@
+results/
+*.txt
+*.json
+*.png
+*.svg
+!images/*
