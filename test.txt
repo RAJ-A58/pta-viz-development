@@ -1,0 +1,38 @@
+
+
+structs:
+sta{
+    sta* f
+    sta* g
+}
+stb{scalar*  a,d,s}
+stc{stc* x}
+
+funcs:
+func( scalar a, scalar b ){
+    scalar c
+    a = 10
+    if a<10 goto 17
+    if b goto 15
+    sta* x,y
+    goto 21
+
+    goto 23
+
+    goto 25
+
+    goto 17
+    x = y
+}
+
+
+main:
+    scalar a
+    scalar d
+    scalar* x
+    call func(a,d)
+    read a
+    use x
+    a = a<d
+    *x = a
+    x = malloc()

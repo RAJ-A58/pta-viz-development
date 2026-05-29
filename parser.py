@@ -1,5 +1,9 @@
 import ply.yacc as yacc
+<<<<<<< HEAD
 from scanner import tokens, reserved
+=======
+from scanner import tokens
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 from stmt_helper import *
 
 precedence = (
@@ -56,9 +60,14 @@ def checkvar(var:variable):
         raise Exception("Variable '"+ varName +"' used without initialization, at line number "+ str(lno))
     
 def checktype(var:variable, typ:str):
+<<<<<<< HEAD
     actual = checkvar(var)   # handles both locals and globals safely
     if actual != typ:
         raise Exception("Type Error: Variable '"+ var.get_display_value() +"' expected to be '"+ typ +"', but got '"+ actual +"' instead, at line number "+ str(lno))
+=======
+    if checkvar(var) != typ:
+        raise Exception("Type Error: Variable '"+ var.get_display_value() +"' expected to be '"+ typ +"', but got '"+ vardict[var.get_display_value()] +"' instead, at line number "+ str(lno))
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
 def checkfield(var:variable, field:variable):
     typ = checkvar(var)
@@ -212,7 +221,10 @@ def p_stmt(p):
             | USE SPACES VARNAME
             | GOTO SPACES NUMBER
             | CALL SPACES VARNAME funcargs
+<<<<<<< HEAD
             | RETURN SPACES VARNAME
+=======
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
             | IF SPACES boolexp SPACES GOTO SPACES NUMBER
             | IF SPACES VARNAME SPACES GOTO SPACES NUMBER'''
     if len(p) == 2:
@@ -225,16 +237,28 @@ def p_stmt(p):
                     raise Exception("Malloc can only be called when lhs is a pointer, at line "+str(lno))
                 elem = '$o'+str(lno)
                 p[5] = [p[1][0], malloc(elem)]
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
                 if p[1][1].get_display_value() in global_vardict:
                     global_vardict[elem] = p[1][0][:-1]
                     global_varlist.add(elem)
                 else:
                     vardict[elem] = p[1][0][:-1]
                     varlist.add(elem)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
         if p[1][0] != p[5][0]:
             raise Exception("Type Mismatch: LHS type - '"+p[1][0]+"', RHS type - '"+p[5][0]+"' on assignment statement at line "+str(lno))
         elif p[1][0][-1] != '*' and p[1][0] != 'scalar':
             raise Exception("Cannot use '=' for assignment of structure. Set all the fields individually. Error at line "+str(lno))
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
         p[0] = assignment(p[1][1], p[5][1], p[1][0])
     elif p[1] == 'read':
         checktype(p[3], 'scalar')
@@ -251,11 +275,14 @@ def p_stmt(p):
     elif p[1] == 'call':
         p[0] = call(p[3], param_to_string(p[4][0]), p[4][1])
         usedfunclist.add(p[0].get_uid())
+<<<<<<< HEAD
     elif p[1] == 'return':
         typ = checkvar(p[3])
         if typ[-1] != '*':
             raise Exception("Return statement can only return pointers. Error at line "+str(lno))
         p[0] = ret(p[3])
+=======
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
     else:
         if p[7].is_not_int():
             raise Exception("Line numbers should be integers")
@@ -295,6 +322,7 @@ def p_funcbody(p):
 
 def p_arg_list(p):
     '''arglist : VARNAME
+<<<<<<< HEAD
                | "&" VARNAME
                | arglist space "," space VARNAME
                | arglist space "," space "&" VARNAME'''
@@ -318,6 +346,15 @@ def p_arg_list(p):
         p[1][0].append(base_type + '*')
         p[1][1].append(address(p[6]))
         p[0] = p[1]
+=======
+               | arglist space "," space VARNAME'''
+    if len(p) == 2:
+        p[0] = [[checkvar(p[1])], [p[1]]]
+    else:
+        p[1][0].append(checkvar(p[5]))
+        p[1][1].append(p[5])
+        p[0] = p[1]
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
 def p_func_args(p):
     '''funcargs : "(" space ")"
@@ -329,6 +366,7 @@ def p_func_args(p):
 
 def p_param_list(p):
     '''paramlist : VARNAME SPACES VARNAME
+<<<<<<< HEAD
                  | VARNAME STARS SPACES VARNAME
                  | paramlist space "," space VARNAME SPACES VARNAME
                  | paramlist space "," space VARNAME STARS SPACES VARNAME'''
@@ -354,11 +392,22 @@ def p_param_list(p):
             raise Exception("Same variable (" + varName + ") occurs multiple times in Function Parameter List at line number " + str(lno))
         if varType not in defstructlist:
             raise Exception("Structure '" + varType + "' used without definition at line " + str(lno))
+=======
+                 | paramlist space "," space VARNAME SPACES VARNAME'''
+    if len(p) == 4:
+        varName = p[3].get_display_value()
+        varType = p[1].get_display_value()
+        p[0] = [[varType], {varName:varType}, [varName]]
+    elif p[7].get_display_value() not in p[1][2]:
+        varName = p[7].get_display_value()
+        varType = p[5].get_display_value()
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
         p[1][0].append(varType)
         p[1][1][varName] = varType
         p[1][2].append(varName)
         p[0] = p[1]
     else:
+<<<<<<< HEAD
         # len == 9: e.g.  ..., scalar* q
         varName = p[8].get_display_value()
         varType = p[5].get_display_value() + p[6]
@@ -370,6 +419,9 @@ def p_param_list(p):
         p[1][1][varName] = varType
         p[1][2].append(varName)
         p[0] = p[1]
+=======
+        raise Exception("Same variable ("+p[7].get_display_value()+") occurs mulltiple times in Function Parameter List at line number "+str(lno))
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
 def p_func_params(p):
     '''funcparams : "(" space ")"
@@ -396,6 +448,7 @@ def p_func(p):
         if func_uid in deffunclist:
             raise Exception("Redeclaration of function '"+func_uid+"' at line number "+str(flno))
         deffunclist.add(func_uid)
+<<<<<<< HEAD
         cleaned = clean_statements()
         # Mangle all local variable names with the function uid so that
         # variables from different call sites / recursive calls don't collide.
@@ -403,6 +456,9 @@ def p_func(p):
         for s in cleaned:
             s.add_funcID(func_id_suffix)
         funcdict[func_uid] = [p[4][1], vardict.copy(), cleaned]
+=======
+        funcdict[func_uid] = [p[4][1], vardict.copy(), clean_statements()]
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
     elif usedstructlist - defstructlist:
         raise Exception("Structure/s " + str(usedstructlist - defstructlist) + " used without definition")
     prepare_next_function()

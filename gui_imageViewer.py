@@ -171,7 +171,10 @@ class QLFCPAWidget(QWidget):
     def __init__(self, parent:QWidget|None=None):
         QWidget.__init__(self, parent)
 
+<<<<<<< HEAD
         self.analysisMode = 'lfcpa' # Default mode
+=======
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
         self.LivenessFp = './results/lfcpa/la/iter_'
         self.PTAFp = './results/lfcpa/pta/iter_'
 
@@ -200,6 +203,7 @@ class QLFCPAWidget(QWidget):
         # Old results
         self.PTAinOld = QPTAWindow("PTA in old")
         self.PTAoutOld = QPTAWindow("PTA out old")
+<<<<<<< HEAD
         self.PTAOld = QSplitter(Qt.Orientation.Horizontal)
         self.PTAOld.addWidget(self.PTAinOld)
         self.PTAOld.addWidget(self.PTAoutOld)
@@ -209,12 +213,28 @@ class QLFCPAWidget(QWidget):
         self.LOld = QSplitter(Qt.Orientation.Horizontal)
         self.LOld.addWidget(self.LinOld)
         self.LOld.addWidget(self.LoutOld)
+=======
+        PTAOld = QSplitter(Qt.Orientation.Horizontal)
+        PTAOld.addWidget(self.PTAinOld)
+        PTAOld.addWidget(self.PTAoutOld)
+
+        self.LinOld = QTextWidget("Liveness in old")
+        self.LoutOld = QTextWidget("Liveness out old")
+        LOld = QSplitter(Qt.Orientation.Horizontal)
+        LOld.addWidget(self.LinOld)
+        LOld.addWidget(self.LoutOld)
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
         # Displayed Data
         self.dataSplitter = QSplitter(Qt.Orientation.Vertical)
         self.dataSplitter.addWidget(self.PTAResults)
+<<<<<<< HEAD
         self.dataSplitter.addWidget(self.PTAOld)
         self.dataSplitter.addWidget(self.LOld)
+=======
+        self.dataSplitter.addWidget(PTAOld)
+        self.dataSplitter.addWidget(LOld)
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
         # Spin Boxes for selecting iter and round
         self.iterSpinBox = QSpinBox(self.changeIter, -1, -1, -1, parent=self)
@@ -239,6 +259,7 @@ class QLFCPAWidget(QWidget):
         viewer.addWidget(self.dataSplitter)
 
         self.setLayout(viewer)
+<<<<<<< HEAD
         viewer.setContentsMargins(0,0,0,0)
 
     # --- NEW: Function to switch data paths ---
@@ -263,6 +284,14 @@ class QLFCPAWidget(QWidget):
             else:
                 # LFCPA retains the round variable: iter_X_Ystmt_Z
                 return str(iter) + '_' + str(round) + 'stmt_' + str(stmt)
+=======
+
+        viewer.setContentsMargins(0,0,0,0)
+
+
+    def getPath(self, iter:int, round:int, stmt:int):
+        return str(iter)+'_'+str(round)+'stmt_'+str(stmt)
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
     def changeIter(self, newIter:int):
         self.roundSpinBox.resetValues(1, 1, self.rounds[newIter-1][1])
@@ -277,10 +306,15 @@ class QLFCPAWidget(QWidget):
             self.PTAinOld.resetImage(self.PTAFp + self.getPath(self.currIter, newRound-1, self.currStmt) + '_in.json')
             self.PTAoutOld.resetImage(self.PTAFp + self.getPath(self.currIter, newRound-1, self.currStmt) + '_out.json')
 
+<<<<<<< HEAD
             # Only update Liveness paths if we are in LFCPA mode
             if self.analysisMode == 'lfcpa':
                 self.LinOld.setText(self.LivenessFp + self.getPath(self.currIter, self.rounds[self.currIter-1][0], self.currStmt) + '_in.json')
                 self.LoutOld.setText(self.LivenessFp + self.getPath(self.currIter, self.rounds[self.currIter-1][0], self.currStmt) + '_out.json')
+=======
+            self.LinOld.setText(self.LivenessFp + self.getPath(self.currIter, self.rounds[self.currIter-1][0], self.currStmt) + '_in.json')
+            self.LoutOld.setText(self.LivenessFp + self.getPath(self.currIter, self.rounds[self.currIter-1][0], self.currStmt) + '_out.json')
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
         else:
             self.PTAinOld.resetImage(self.PTAFp + self.getPath(self.currIter, 0, self.currStmt) + '_in.json')
@@ -301,11 +335,15 @@ class QLFCPAWidget(QWidget):
         self.currStmt = 0
 
         self.PTAAnalysis = True
+<<<<<<< HEAD
         
         # Prevent switching logic from crashing in VASCO mode
         if self.analysisMode == 'lfcpa':
             self.switchAnalysisType()
             self.switchAnalysisType()
+=======
+        self.switchAnalysisType()
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
         self.roundSpinBox.resetValues(1, 1, self.rounds[0][1])
         self.iterSpinBox.resetValues(1, 1, self.rounds[0][1])
@@ -333,4 +371,33 @@ class QLFCPAWidget(QWidget):
 
     def setCurrStmt(self, stmt):
         self.currStmt = stmt
+<<<<<<< HEAD
         self.changeRound(self.roundSpinBox.value())
+=======
+        self.changeRound(self.roundSpinBox.value())
+
+
+if __name__ == '__main__':
+    
+    def run_test():
+        
+        from PyQt6.QtWidgets import QApplication
+        
+        import sys
+       
+        app = QApplication([])
+
+        f = open('./position_dict.json', 'r')
+        cnts = f.read()
+        f.close()
+
+        editor = QLFCPAWidget()
+        
+        editor.resize(255,790)
+        editor.show()
+    
+        sys.exit(app.exec())
+
+    
+    run_test()
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
