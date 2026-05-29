@@ -14,7 +14,12 @@ reserved  = {
     'main' : 'MAINCODE',
     'call' : 'CALL',
     'malloc' : 'MALLOC',
+<<<<<<< HEAD
+    'globals' : 'GLOBALS',
+    'return' : 'RETURN'
+=======
     'globals' : 'GLOBALS'  #  ADDED THIS LINE
+>>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 }
 tokens = ['VARNAME', 'NUMBER', 'SPACES', 'NEWLINE', 'LTE', 'GTE', 'STARS'] + list(reserved.values())
 
