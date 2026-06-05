@@ -6,15 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-<<<<<<< HEAD
-_lr_signature = 'progleftNUMBERleftVARNAMEnonassocLVL1nonassocLVL2CALL FUNCS GLOBALS GOTO GTE IF LTE MAINCODE MALLOC NEWLINE NUMBER READ RETURN SPACES STARS STRT USE VARNAMEspace : %prec LVL1\n| SPACES %prec LVL2boolop : space LTE space\n| space GTE space\n| space "<" space\n| space ">" space\n| space "=" "=" space\n| space "!" "=" spaceboolexp : VARNAME boolop VARNAME\n| VARNAME boolop NUMBER\n| NUMBER boolop VARNAME\n| NUMBER boolop NUMBERlhs : STARS VARNAME\n| VARNAME "-" ">" VARNAME\n| VARNAME "." VARNAMErhs : boolexp\n| lhs\n| VARNAME\n| "&" VARNAME\n| NUMBERvardec : VARNAME SPACES list\n| VARNAME STARS SPACES liststmt : vardec\n| lhs space "=" space rhs\n| VARNAME space "=" space rhs\n| VARNAME space "=" space MALLOC "(" ")"\n| READ SPACES VARNAME\n| USE SPACES VARNAME\n| GOTO SPACES NUMBER\n| CALL SPACES VARNAME funcargs\n| RETURN SPACES VARNAME\n| IF SPACES boolexp SPACES GOTO SPACES NUMBER\n| IF SPACES VARNAME SPACES GOTO SPACES NUMBERtac : nl MAINCODE ":"\n| tac stmtnl stmtnl : NEWLINEstmtnl : NEWLINEfuncbody : stmt\n| funcbody stmtnl stmtarglist : VARNAME\n| "&" VARNAME\n| arglist space "," space VARNAME\n| arglist space "," space "&" VARNAMEfuncargs : "(" space ")"\n| "(" space arglist space ")"paramlist : VARNAME SPACES VARNAME\n| VARNAME STARS SPACES VARNAME\n| paramlist space "," space VARNAME SPACES VARNAME\n| paramlist space "," space VARNAME STARS SPACES VARNAMEfuncparams : "(" space ")"\n| "(" space paramlist space ")"func : FUNCS ":"\n| func nl VARNAME funcparams spnl "{" spnl funcbody spnl "}"\n| func nl VARNAME funcparams spnl "{" spnl "}"spnl : space\n| nllist : VARNAME space\n| list "," space VARNAME spacedeclist : VARNAME SPACES list\n| VARNAME STARS SPACES list\n| declist nl VARNAME SPACES list\n| declist nl VARNAME STARS SPACES liststructs : spnl STRT ":" nl\n| structs VARNAME space "{" spnl declist spnl "}" nl\n| structs VARNAME space "{" spnl "}" nlglobal_sec : spnl GLOBALS ":" nl\n| global_sec vardec nl\n| global_sec nlprog : structs global_sec func tac spnl\n| structs func tac spnl'
-    
-_lr_action_items = {'STRT':([0,3,4,5,6,7,],[-1,13,-56,-55,-2,-36,]),'SPACES':([0,2,6,7,11,17,18,24,27,34,35,37,38,40,41,42,43,44,45,46,47,48,49,51,52,53,56,57,58,70,73,74,77,78,80,81,82,83,85,86,87,88,89,90,91,92,94,97,98,101,102,103,112,113,116,117,118,119,120,121,123,124,127,128,129,130,131,132,133,136,137,138,139,141,142,143,144,146,147,149,150,152,153,154,161,162,167,168,170,172,173,176,178,179,180,181,182,184,186,188,190,191,],[6,6,-2,-36,6,26,6,6,39,6,-63,-1,-21,-35,-23,6,61,64,65,66,67,68,69,6,6,-34,-57,6,-22,-13,93,6,6,6,-15,-27,-28,-29,-31,104,6,107,6,-50,6,111,114,-65,-1,-14,-30,6,145,-59,148,-58,-17,-24,-16,-18,-20,-25,156,-12,-11,6,6,6,6,163,-9,-10,6,-38,-51,6,-46,-60,-64,169,-19,-44,6,-40,6,6,-47,-61,-26,-41,-32,-33,-39,183,-62,-45,6,187,-48,-42,-49,-43,]),'NEWLINE':([0,2,6,7,8,9,14,15,16,18,22,23,24,25,33,34,35,37,38,40,41,51,53,54,56,58,70,74,75,80,81,82,83,85,89,90,97,98,101,102,113,115,117,118,119,120,121,123,124,128,129,137,138,139,140,141,142,146,147,150,152,168,170,173,176,177,178,180,181,],[7,7,-2,-36,7,7,7,7,-68,30,-52,7,30,-67,7,7,-63,-1,-21,-35,-23,7,-34,-66,-57,-22,-13,7,7,-15,-27,-28,-29,-31,7,-50,-65,-1,-14,-30,-59,7,-58,-17,-24,-16,-18,-20,-25,-12,-11,-9,-10,30,-54,-38,-51,-60,-64,-19,-44,-61,-26,-32,-33,-53,-39,-62,-45,]),'$end':([1,4,5,6,18,24,28,30,36,37,38,40,41,53,56,58,70,80,81,82,83,85,98,101,102,117,118,119,120,121,123,124,128,129,137,138,150,152,170,173,176,181,],[0,-56,-55,-2,-1,-1,-70,-36,-69,-1,-21,-35,-23,-34,-57,-22,-13,-15,-27,-28,-29,-31,-1,-14,-30,-58,-17,-24,-16,-18,-20,-25,-12,-11,-9,-10,-19,-44,-26,-32,-33,-45,]),'VARNAME':([2,4,5,6,7,8,16,19,25,26,29,30,34,35,39,50,52,54,55,57,61,63,64,65,67,68,69,72,76,77,78,79,89,93,96,97,99,100,103,105,108,109,111,114,122,126,130,131,132,133,143,145,147,148,155,157,158,159,160,161,162,165,166,169,174,175,182,183,185,187,189,],[11,-56,-55,-2,-36,17,-68,31,-67,37,43,-37,-1,-63,37,70,-1,-66,73,-1,37,80,81,82,84,85,88,92,98,-1,-1,101,-1,37,116,-65,121,121,-1,129,137,43,144,37,150,154,-1,-1,-1,-1,-1,167,-64,37,172,-3,-4,-5,-6,-1,-1,43,179,37,-7,-8,-1,186,188,190,191,]),'FUNCS':([2,7,8,16,25,35,54,97,147,],[12,-36,12,-68,-67,-63,-66,-65,-64,]),'GLOBALS':([2,4,5,6,7,10,35,97,147,],[-1,-56,-55,-2,-36,20,-63,-65,-64,]),'}':([4,5,6,7,30,34,37,38,41,55,56,58,70,74,80,81,82,83,85,89,95,96,98,101,102,109,113,117,118,119,120,121,123,124,128,129,137,138,139,141,146,150,152,164,168,170,173,176,178,180,181,],[-56,-55,-2,-36,-36,-1,-1,-21,-23,75,-57,-22,-13,-1,-15,-27,-28,-29,-31,-1,115,-56,-1,-14,-30,140,-59,-58,-17,-24,-16,-18,-20,-25,-12,-11,-9,-10,-1,-38,-60,-19,-44,177,-61,-26,-32,-33,-39,-62,-45,]),'{':([4,5,6,7,11,21,51,71,90,142,],[-56,-55,-2,-36,-1,34,-1,89,-50,-51,]),'READ':([4,5,6,7,29,30,89,109,165,],[-56,-55,-2,-36,44,-37,-1,44,44,]),'USE':([4,5,6,7,29,30,89,109,165,],[-56,-55,-2,-36,45,-37,-1,45,45,]),'GOTO':([4,5,6,7,29,30,89,104,107,109,165,],[-56,-55,-2,-36,46,-37,-1,127,136,46,46,]),'CALL':([4,5,6,7,29,30,89,109,165,],[-56,-55,-2,-36,47,-37,-1,47,47,]),'RETURN':([4,5,6,7,29,30,89,109,165,],[-56,-55,-2,-36,48,-37,-1,48,48,]),'IF':([4,5,6,7,29,30,89,109,165,],[-56,-55,-2,-36,49,-37,-1,49,49,]),'STARS':([4,5,6,7,17,29,30,43,73,77,78,89,92,99,100,109,116,165,179,],[-56,-55,-2,-36,27,50,-37,27,94,-1,-1,-1,112,50,50,50,149,50,184,]),',':([6,37,38,56,58,91,98,110,113,117,144,146,153,154,167,168,171,172,180,186,188,190,191,],[-2,-1,57,-57,57,-1,-1,143,57,-58,-46,57,-1,-40,-47,57,182,-41,57,-48,-42,-49,-43,]),'=':([6,42,43,59,60,61,70,80,87,88,101,106,107,121,123,134,135,],[-2,-1,-1,77,78,-2,-13,-15,-1,-1,-14,134,-2,-1,-1,161,162,]),')':([6,52,72,91,103,110,126,144,151,153,154,167,171,172,186,188,190,191,],[-2,-1,90,-1,-1,142,152,-46,170,-1,-40,-47,181,-41,-48,-42,-49,-43,]),'&':([6,77,78,99,100,103,126,182,185,],[-2,-1,-1,122,122,-1,155,-1,189,]),'NUMBER':([6,66,69,77,78,99,100,105,108,130,131,132,133,156,157,158,159,160,161,162,163,174,175,],[-2,83,87,-1,-1,123,123,128,138,-1,-1,-1,-1,173,-3,-4,-5,-6,-1,-1,176,-7,-8,]),'MALLOC':([6,78,100,],[-2,-1,125,]),'LTE':([6,87,88,106,107,121,123,],[-2,-1,-1,130,-2,-1,-1,]),'GTE':([6,87,88,106,107,121,123,],[-2,-1,-1,131,-2,-1,-1,]),'<':([6,87,88,106,107,121,123,],[-2,-1,-1,132,-2,-1,-1,]),'>':([6,62,87,88,106,107,121,123,],[-2,79,-1,-1,133,-2,-1,-1,]),'!':([6,87,88,106,107,121,123,],[-2,-1,-1,135,-2,-1,-1,]),'MAINCODE':([7,19,],[-36,32,]),':':([12,13,20,32,],[22,23,33,53,]),'(':([31,84,125,],[52,103,151,]),'-':([43,121,],[62,62,]),'.':([43,121,],[63,63,]),}
-=======
 _lr_signature = 'progleftNUMBERleftVARNAMEnonassocLVL1nonassocLVL2CALL FUNCS GLOBALS GOTO GTE IF LTE MAINCODE MALLOC NEWLINE NUMBER READ SPACES STARS STRT USE VARNAMEspace : %prec LVL1\n| SPACES %prec LVL2boolop : space LTE space\n| space GTE space\n| space "<" space\n| space ">" space\n| space "=" "=" space\n| space "!" "=" spaceboolexp : VARNAME boolop VARNAME\n| VARNAME boolop NUMBER\n| NUMBER boolop VARNAME\n| NUMBER boolop NUMBERlhs : STARS VARNAME\n| VARNAME "-" ">" VARNAME\n| VARNAME "." VARNAMErhs : boolexp\n| lhs\n| VARNAME\n| "&" VARNAME\n| NUMBERvardec : VARNAME SPACES list\n| VARNAME STARS SPACES liststmt : vardec\n| lhs space "=" space rhs\n| VARNAME space "=" space rhs\n| VARNAME space "=" space MALLOC "(" ")"\n| READ SPACES VARNAME\n| USE SPACES VARNAME\n| GOTO SPACES NUMBER\n| CALL SPACES VARNAME funcargs\n| IF SPACES boolexp SPACES GOTO SPACES NUMBER\n| IF SPACES VARNAME SPACES GOTO SPACES NUMBERtac : nl MAINCODE ":"\n| tac stmtnl stmtnl : NEWLINEstmtnl : NEWLINEfuncbody : stmt\n| funcbody stmtnl stmtarglist : VARNAME\n| arglist space "," space VARNAMEfuncargs : "(" space ")"\n| "(" space arglist space ")"paramlist : VARNAME SPACES VARNAME\n| paramlist space "," space VARNAME SPACES VARNAMEfuncparams : "(" space ")"\n| "(" space paramlist space ")"func : FUNCS ":"\n| func nl VARNAME funcparams spnl "{" spnl funcbody spnl "}"\n| func nl VARNAME funcparams spnl "{" spnl "}"spnl : space\n| nllist : VARNAME space\n| list "," space VARNAME spacedeclist : VARNAME SPACES list\n| VARNAME STARS SPACES list\n| declist nl VARNAME SPACES list\n| declist nl VARNAME STARS SPACES liststructs : spnl STRT ":" nl\n| structs VARNAME space "{" spnl declist spnl "}" nl\n| structs VARNAME space "{" spnl "}" nlglobal_sec : spnl GLOBALS ":" nl\n| global_sec vardec nl\n| global_sec nlprog : structs global_sec func tac spnl\n| structs func tac spnl'
     
 _lr_action_items = {'STRT':([0,3,4,5,6,7,],[-1,13,-51,-50,-2,-35,]),'SPACES':([0,2,6,7,11,17,18,24,27,34,35,37,38,40,41,42,43,44,45,46,47,48,50,51,52,55,56,57,68,71,72,75,76,78,79,80,81,83,84,85,86,87,88,89,91,94,95,98,99,100,109,112,113,114,115,116,117,119,120,123,124,125,126,127,128,129,132,133,134,135,137,138,139,140,141,142,144,145,147,148,149,155,156,161,163,165,168,170,171,172,173,174,177,178,],[6,6,-2,-35,6,26,6,6,39,6,-58,-1,-21,-34,-23,6,60,63,64,65,66,67,6,6,-33,-52,6,-22,-13,90,6,6,6,-15,-27,-28,-29,101,6,104,6,-45,6,108,110,-60,-1,-14,-30,6,-54,143,-53,-17,-24,-16,-18,-20,-25,150,-12,-11,6,6,6,6,157,-9,-10,6,-37,-46,6,-43,-55,-59,162,-19,-41,6,-39,6,6,-56,-26,-31,-32,-38,175,-57,-42,6,-44,-40,]),'NEWLINE':([0,2,6,7,8,9,14,15,16,18,22,23,24,25,33,34,35,37,38,40,41,50,52,53,55,57,68,72,73,78,79,80,81,86,87,94,95,98,99,109,111,113,114,115,116,117,119,120,124,125,133,134,135,136,137,138,141,142,145,147,161,163,165,168,169,170,172,173,],[7,7,-2,-35,7,7,7,7,-63,30,-47,7,30,-62,7,7,-58,-1,-21,-34,-23,7,-33,-61,-52,-22,-13,7,7,-15,-27,-28,-29,7,-45,-60,-1,-14,-30,-54,7,-53,-17,-24,-16,-18,-20,-25,-12,-11,-9,-10,30,-49,-37,-46,-55,-59,-19,-41,-56,-26,-31,-32,-48,-38,-57,-42,]),'$end':([1,4,5,6,18,24,28,30,36,37,38,40,41,52,55,57,68,78,79,80,81,95,98,99,113,114,115,116,117,119,120,124,125,133,134,145,147,163,165,168,173,],[0,-51,-50,-2,-1,-1,-65,-35,-64,-1,-21,-34,-23,-33,-52,-22,-13,-15,-27,-28,-29,-1,-14,-30,-53,-17,-24,-16,-18,-20,-25,-12,-11,-9,-10,-19,-41,-26,-31,-32,-42,]),'VARNAME':([2,4,5,6,7,8,16,19,25,26,29,30,34,35,39,49,51,53,54,56,60,62,63,64,66,67,70,74,75,76,77,86,90,93,94,96,97,100,102,105,106,108,110,118,122,126,127,128,129,139,142,143,151,152,153,154,155,156,159,160,162,166,167,174,175,176,],[11,-51,-50,-2,-35,17,-63,31,-62,37,43,-36,-1,-58,37,68,-1,-61,71,-1,37,78,79,80,82,85,89,95,-1,-1,98,-1,37,112,-60,117,117,-1,125,133,43,140,37,145,149,-1,-1,-1,-1,-1,-59,37,-3,-4,-5,-6,-1,-1,43,171,37,-7,-8,-1,177,178,]),'FUNCS':([2,7,8,16,25,35,53,94,142,],[12,-35,12,-63,-62,-58,-61,-60,-59,]),'GLOBALS':([2,4,5,6,7,10,35,94,142,],[-1,-51,-50,-2,-35,20,-58,-60,-59,]),'}':([4,5,6,7,30,34,37,38,41,54,55,57,68,72,78,79,80,81,86,92,93,95,98,99,106,109,113,114,115,116,117,119,120,124,125,133,134,135,137,141,145,147,158,161,163,165,168,170,172,173,],[-51,-50,-2,-35,-35,-1,-1,-21,-23,73,-52,-22,-13,-1,-15,-27,-28,-29,-1,111,-51,-1,-14,-30,136,-54,-53,-17,-24,-16,-18,-20,-25,-12,-11,-9,-10,-1,-37,-55,-19,-41,169,-56,-26,-31,-32,-38,-57,-42,]),'{':([4,5,6,7,11,21,50,69,87,138,],[-51,-50,-2,-35,-1,34,-1,86,-45,-46,]),'READ':([4,5,6,7,29,30,86,106,159,],[-51,-50,-2,-35,44,-36,-1,44,44,]),'USE':([4,5,6,7,29,30,86,106,159,],[-51,-50,-2,-35,45,-36,-1,45,45,]),'GOTO':([4,5,6,7,29,30,86,101,104,106,159,],[-51,-50,-2,-35,46,-36,-1,123,132,46,46,]),'CALL':([4,5,6,7,29,30,86,106,159,],[-51,-50,-2,-35,47,-36,-1,47,47,]),'IF':([4,5,6,7,29,30,86,106,159,],[-51,-50,-2,-35,48,-36,-1,48,48,]),'STARS':([4,5,6,7,17,29,30,43,71,75,76,86,96,97,106,112,159,],[-51,-50,-2,-35,27,49,-36,27,91,-1,-1,-1,49,49,49,144,49,]),',':([6,37,38,55,57,88,95,107,109,113,140,141,148,149,161,164,172,177,178,],[-2,-1,56,-52,56,-1,-1,139,56,-53,-43,56,-1,-39,56,174,56,-44,-40,]),'=':([6,42,43,58,59,60,68,78,84,85,98,103,104,117,119,130,131,],[-2,-1,-1,75,76,-2,-13,-15,-1,-1,-14,130,-2,-1,-1,155,156,]),')':([6,51,70,88,100,107,122,140,146,148,149,164,177,178,],[-2,-1,87,-1,-1,138,147,-43,163,-1,-39,173,-44,-40,]),'&':([6,75,76,96,97,],[-2,-1,-1,118,118,]),'NUMBER':([6,65,67,75,76,96,97,102,105,126,127,128,129,150,151,152,153,154,155,156,157,166,167,],[-2,81,84,-1,-1,119,119,124,134,-1,-1,-1,-1,165,-3,-4,-5,-6,-1,-1,168,-7,-8,]),'MALLOC':([6,76,97,],[-2,-1,121,]),'LTE':([6,84,85,103,104,117,119,],[-2,-1,-1,126,-2,-1,-1,]),'GTE':([6,84,85,103,104,117,119,],[-2,-1,-1,127,-2,-1,-1,]),'<':([6,84,85,103,104,117,119,],[-2,-1,-1,128,-2,-1,-1,]),'>':([6,61,84,85,103,104,117,119,],[-2,77,-1,-1,129,-2,-1,-1,]),'!':([6,84,85,103,104,117,119,],[-2,-1,-1,131,-2,-1,-1,]),'MAINCODE':([7,19,],[-35,32,]),':':([12,13,20,32,],[22,23,33,52,]),'(':([31,82,121,],[51,100,146,]),'-':([43,117,],[61,61,]),'.':([43,117,],[62,62,]),}
->>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -23,11 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-<<<<<<< HEAD
-_lr_goto_items = {'prog':([0,],[1,]),'structs':([0,],[2,]),'spnl':([0,2,18,24,34,51,74,89,139,],[3,10,28,36,55,71,95,109,164,]),'nl':([0,2,8,9,14,15,18,23,24,33,34,51,74,75,89,115,139,],[4,4,16,19,19,25,4,35,4,54,4,4,96,97,4,147,4,]),'space':([0,2,11,18,24,34,37,42,43,51,52,57,74,77,78,87,88,89,91,98,103,121,123,130,131,132,133,139,143,153,161,162,182,],[5,5,21,5,5,5,56,59,60,5,72,76,5,99,100,106,106,5,110,117,126,106,106,157,158,159,160,5,166,171,174,175,185,]),'global_sec':([2,],[8,]),'func':([2,8,],[9,14,]),'vardec':([8,29,109,165,],[15,41,41,41,]),'tac':([9,14,],[18,24,]),'stmtnl':([18,24,139,],[29,29,165,]),'list':([26,39,61,93,114,148,169,],[38,58,38,113,146,168,180,]),'stmt':([29,109,165,],[40,141,178,]),'lhs':([29,99,100,109,165,],[42,118,118,42,42,]),'funcparams':([31,],[51,]),'declist':([55,],[74,]),'boolexp':([69,99,100,],[86,120,120,]),'paramlist':([72,],[91,]),'funcargs':([84,],[102,]),'boolop':([87,88,121,123,],[105,108,108,105,]),'rhs':([99,100,],[119,124,]),'funcbody':([109,],[139,]),'arglist':([126,],[153,]),}
-=======
 _lr_goto_items = {'prog':([0,],[1,]),'structs':([0,],[2,]),'spnl':([0,2,18,24,34,50,72,86,135,],[3,10,28,36,54,69,92,106,158,]),'nl':([0,2,8,9,14,15,18,23,24,33,34,50,72,73,86,111,135,],[4,4,16,19,19,25,4,35,4,53,4,4,93,94,4,142,4,]),'space':([0,2,11,18,24,34,37,42,43,50,51,56,72,75,76,84,85,86,88,95,100,117,119,126,127,128,129,135,139,148,155,156,174,],[5,5,21,5,5,5,55,58,59,5,70,74,5,96,97,103,103,5,107,113,122,103,103,151,152,153,154,5,160,164,166,167,176,]),'global_sec':([2,],[8,]),'func':([2,8,],[9,14,]),'vardec':([8,29,106,159,],[15,41,41,41,]),'tac':([9,14,],[18,24,]),'stmtnl':([18,24,135,],[29,29,159,]),'list':([26,39,60,90,110,143,162,],[38,57,38,109,141,161,172,]),'stmt':([29,106,159,],[40,137,170,]),'lhs':([29,96,97,106,159,],[42,114,114,42,42,]),'funcparams':([31,],[50,]),'declist':([54,],[72,]),'boolexp':([67,96,97,],[83,116,116,]),'paramlist':([70,],[88,]),'funcargs':([82,],[99,]),'boolop':([84,85,117,119,],[102,105,105,102,]),'rhs':([96,97,],[115,120,]),'funcbody':([106,],[135,]),'arglist':([122,],[148,]),}
->>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -37,78 +27,6 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> prog","S'",1,None,None,None),
-<<<<<<< HEAD
-  ('space -> <empty>','space',0,'p_space','parser.py',116),
-  ('space -> SPACES','space',1,'p_space','parser.py',117),
-  ('boolop -> space LTE space','boolop',3,'p_bool_op','parser.py',121),
-  ('boolop -> space GTE space','boolop',3,'p_bool_op','parser.py',122),
-  ('boolop -> space < space','boolop',3,'p_bool_op','parser.py',123),
-  ('boolop -> space > space','boolop',3,'p_bool_op','parser.py',124),
-  ('boolop -> space = = space','boolop',4,'p_bool_op','parser.py',125),
-  ('boolop -> space ! = space','boolop',4,'p_bool_op','parser.py',126),
-  ('boolexp -> VARNAME boolop VARNAME','boolexp',3,'p_bool_exp','parser.py',135),
-  ('boolexp -> VARNAME boolop NUMBER','boolexp',3,'p_bool_exp','parser.py',136),
-  ('boolexp -> NUMBER boolop VARNAME','boolexp',3,'p_bool_exp','parser.py',137),
-  ('boolexp -> NUMBER boolop NUMBER','boolexp',3,'p_bool_exp','parser.py',138),
-  ('lhs -> STARS VARNAME','lhs',2,'p_lhs','parser.py',147),
-  ('lhs -> VARNAME - > VARNAME','lhs',4,'p_lhs','parser.py',148),
-  ('lhs -> VARNAME . VARNAME','lhs',3,'p_lhs','parser.py',149),
-  ('rhs -> boolexp','rhs',1,'p_rhs','parser.py',163),
-  ('rhs -> lhs','rhs',1,'p_rhs','parser.py',164),
-  ('rhs -> VARNAME','rhs',1,'p_rhs','parser.py',165),
-  ('rhs -> & VARNAME','rhs',2,'p_rhs','parser.py',166),
-  ('rhs -> NUMBER','rhs',1,'p_rhs','parser.py',167),
-  ('vardec -> VARNAME SPACES list','vardec',3,'p_var_dec','parser.py',178),
-  ('vardec -> VARNAME STARS SPACES list','vardec',4,'p_var_dec','parser.py',179),
-  ('stmt -> vardec','stmt',1,'p_stmt','parser.py',207),
-  ('stmt -> lhs space = space rhs','stmt',5,'p_stmt','parser.py',208),
-  ('stmt -> VARNAME space = space rhs','stmt',5,'p_stmt','parser.py',209),
-  ('stmt -> VARNAME space = space MALLOC ( )','stmt',7,'p_stmt','parser.py',210),
-  ('stmt -> READ SPACES VARNAME','stmt',3,'p_stmt','parser.py',211),
-  ('stmt -> USE SPACES VARNAME','stmt',3,'p_stmt','parser.py',212),
-  ('stmt -> GOTO SPACES NUMBER','stmt',3,'p_stmt','parser.py',213),
-  ('stmt -> CALL SPACES VARNAME funcargs','stmt',4,'p_stmt','parser.py',214),
-  ('stmt -> RETURN SPACES VARNAME','stmt',3,'p_stmt','parser.py',215),
-  ('stmt -> IF SPACES boolexp SPACES GOTO SPACES NUMBER','stmt',7,'p_stmt','parser.py',216),
-  ('stmt -> IF SPACES VARNAME SPACES GOTO SPACES NUMBER','stmt',7,'p_stmt','parser.py',217),
-  ('tac -> nl MAINCODE :','tac',3,'p_tac','parser.py',271),
-  ('tac -> tac stmtnl stmt','tac',3,'p_tac','parser.py',272),
-  ('nl -> NEWLINE','nl',1,'p_nl','parser.py',278),
-  ('stmtnl -> NEWLINE','stmtnl',1,'p_stmt_nl','parser.py',284),
-  ('funcbody -> stmt','funcbody',1,'p_funcbody','parser.py',291),
-  ('funcbody -> funcbody stmtnl stmt','funcbody',3,'p_funcbody','parser.py',292),
-  ('arglist -> VARNAME','arglist',1,'p_arg_list','parser.py',297),
-  ('arglist -> & VARNAME','arglist',2,'p_arg_list','parser.py',298),
-  ('arglist -> arglist space , space VARNAME','arglist',5,'p_arg_list','parser.py',299),
-  ('arglist -> arglist space , space & VARNAME','arglist',6,'p_arg_list','parser.py',300),
-  ('funcargs -> ( space )','funcargs',3,'p_func_args','parser.py',323),
-  ('funcargs -> ( space arglist space )','funcargs',5,'p_func_args','parser.py',324),
-  ('paramlist -> VARNAME SPACES VARNAME','paramlist',3,'p_param_list','parser.py',331),
-  ('paramlist -> VARNAME STARS SPACES VARNAME','paramlist',4,'p_param_list','parser.py',332),
-  ('paramlist -> paramlist space , space VARNAME SPACES VARNAME','paramlist',7,'p_param_list','parser.py',333),
-  ('paramlist -> paramlist space , space VARNAME STARS SPACES VARNAME','paramlist',8,'p_param_list','parser.py',334),
-  ('funcparams -> ( space )','funcparams',3,'p_func_params','parser.py',375),
-  ('funcparams -> ( space paramlist space )','funcparams',5,'p_func_params','parser.py',376),
-  ('func -> FUNCS :','func',2,'p_func','parser.py',387),
-  ('func -> func nl VARNAME funcparams spnl { spnl funcbody spnl }','func',10,'p_func','parser.py',388),
-  ('func -> func nl VARNAME funcparams spnl { spnl }','func',8,'p_func','parser.py',389),
-  ('spnl -> space','spnl',1,'p_space_nl','parser.py',411),
-  ('spnl -> nl','spnl',1,'p_space_nl','parser.py',412),
-  ('list -> VARNAME space','list',2,'p_list','parser.py',419),
-  ('list -> list , space VARNAME space','list',5,'p_list','parser.py',420),
-  ('declist -> VARNAME SPACES list','declist',3,'p_dec_list','parser.py',431),
-  ('declist -> VARNAME STARS SPACES list','declist',4,'p_dec_list','parser.py',432),
-  ('declist -> declist nl VARNAME SPACES list','declist',5,'p_dec_list','parser.py',433),
-  ('declist -> declist nl VARNAME STARS SPACES list','declist',6,'p_dec_list','parser.py',434),
-  ('structs -> spnl STRT : nl','structs',4,'p_structs','parser.py',459),
-  ('structs -> structs VARNAME space { spnl declist spnl } nl','structs',9,'p_structs','parser.py',460),
-  ('structs -> structs VARNAME space { spnl } nl','structs',7,'p_structs','parser.py',461),
-  ('global_sec -> spnl GLOBALS : nl','global_sec',4,'p_global_sec','parser.py',476),
-  ('global_sec -> global_sec vardec nl','global_sec',3,'p_global_sec','parser.py',477),
-  ('global_sec -> global_sec nl','global_sec',2,'p_global_sec','parser.py',478),
-  ('prog -> structs global_sec func tac spnl','prog',5,'p_prog','parser.py',483),
-  ('prog -> structs func tac spnl','prog',4,'p_prog','parser.py',484),
-=======
   ('space -> <empty>','space',0,'p_space','parser.py',115),
   ('space -> SPACES','space',1,'p_space','parser.py',116),
   ('boolop -> space LTE space','boolop',3,'p_bool_op','parser.py',120),
@@ -141,38 +59,37 @@ _lr_productions = [
   ('stmt -> CALL SPACES VARNAME funcargs','stmt',4,'p_stmt','parser.py',213),
   ('stmt -> IF SPACES boolexp SPACES GOTO SPACES NUMBER','stmt',7,'p_stmt','parser.py',214),
   ('stmt -> IF SPACES VARNAME SPACES GOTO SPACES NUMBER','stmt',7,'p_stmt','parser.py',215),
-  ('tac -> nl MAINCODE :','tac',3,'p_tac','parser.py',267),
-  ('tac -> tac stmtnl stmt','tac',3,'p_tac','parser.py',268),
-  ('nl -> NEWLINE','nl',1,'p_nl','parser.py',274),
-  ('stmtnl -> NEWLINE','stmtnl',1,'p_stmt_nl','parser.py',280),
-  ('funcbody -> stmt','funcbody',1,'p_funcbody','parser.py',287),
-  ('funcbody -> funcbody stmtnl stmt','funcbody',3,'p_funcbody','parser.py',288),
-  ('arglist -> VARNAME','arglist',1,'p_arg_list','parser.py',293),
-  ('arglist -> arglist space , space VARNAME','arglist',5,'p_arg_list','parser.py',294),
-  ('funcargs -> ( space )','funcargs',3,'p_func_args','parser.py',303),
-  ('funcargs -> ( space arglist space )','funcargs',5,'p_func_args','parser.py',304),
-  ('paramlist -> VARNAME SPACES VARNAME','paramlist',3,'p_param_list','parser.py',311),
-  ('paramlist -> paramlist space , space VARNAME SPACES VARNAME','paramlist',7,'p_param_list','parser.py',312),
-  ('funcparams -> ( space )','funcparams',3,'p_func_params','parser.py',328),
-  ('funcparams -> ( space paramlist space )','funcparams',5,'p_func_params','parser.py',329),
-  ('func -> FUNCS :','func',2,'p_func','parser.py',340),
-  ('func -> func nl VARNAME funcparams spnl { spnl funcbody spnl }','func',10,'p_func','parser.py',341),
-  ('func -> func nl VARNAME funcparams spnl { spnl }','func',8,'p_func','parser.py',342),
-  ('spnl -> space','spnl',1,'p_space_nl','parser.py',358),
-  ('spnl -> nl','spnl',1,'p_space_nl','parser.py',359),
-  ('list -> VARNAME space','list',2,'p_list','parser.py',366),
-  ('list -> list , space VARNAME space','list',5,'p_list','parser.py',367),
-  ('declist -> VARNAME SPACES list','declist',3,'p_dec_list','parser.py',378),
-  ('declist -> VARNAME STARS SPACES list','declist',4,'p_dec_list','parser.py',379),
-  ('declist -> declist nl VARNAME SPACES list','declist',5,'p_dec_list','parser.py',380),
-  ('declist -> declist nl VARNAME STARS SPACES list','declist',6,'p_dec_list','parser.py',381),
-  ('structs -> spnl STRT : nl','structs',4,'p_structs','parser.py',406),
-  ('structs -> structs VARNAME space { spnl declist spnl } nl','structs',9,'p_structs','parser.py',407),
-  ('structs -> structs VARNAME space { spnl } nl','structs',7,'p_structs','parser.py',408),
-  ('global_sec -> spnl GLOBALS : nl','global_sec',4,'p_global_sec','parser.py',423),
-  ('global_sec -> global_sec vardec nl','global_sec',3,'p_global_sec','parser.py',424),
-  ('global_sec -> global_sec nl','global_sec',2,'p_global_sec','parser.py',425),
-  ('prog -> structs global_sec func tac spnl','prog',5,'p_prog','parser.py',430),
-  ('prog -> structs func tac spnl','prog',4,'p_prog','parser.py',431),
->>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
+  ('tac -> nl MAINCODE :','tac',3,'p_tac','parser.py',266),
+  ('tac -> tac stmtnl stmt','tac',3,'p_tac','parser.py',267),
+  ('nl -> NEWLINE','nl',1,'p_nl','parser.py',273),
+  ('stmtnl -> NEWLINE','stmtnl',1,'p_stmt_nl','parser.py',279),
+  ('funcbody -> stmt','funcbody',1,'p_funcbody','parser.py',286),
+  ('funcbody -> funcbody stmtnl stmt','funcbody',3,'p_funcbody','parser.py',287),
+  ('arglist -> VARNAME','arglist',1,'p_arg_list','parser.py',292),
+  ('arglist -> arglist space , space VARNAME','arglist',5,'p_arg_list','parser.py',293),
+  ('funcargs -> ( space )','funcargs',3,'p_func_args','parser.py',302),
+  ('funcargs -> ( space arglist space )','funcargs',5,'p_func_args','parser.py',303),
+  ('paramlist -> VARNAME SPACES VARNAME','paramlist',3,'p_param_list','parser.py',310),
+  ('paramlist -> paramlist space , space VARNAME SPACES VARNAME','paramlist',7,'p_param_list','parser.py',311),
+  ('funcparams -> ( space )','funcparams',3,'p_func_params','parser.py',327),
+  ('funcparams -> ( space paramlist space )','funcparams',5,'p_func_params','parser.py',328),
+  ('func -> FUNCS :','func',2,'p_func','parser.py',339),
+  ('func -> func nl VARNAME funcparams spnl { spnl funcbody spnl }','func',10,'p_func','parser.py',340),
+  ('func -> func nl VARNAME funcparams spnl { spnl }','func',8,'p_func','parser.py',341),
+  ('spnl -> space','spnl',1,'p_space_nl','parser.py',357),
+  ('spnl -> nl','spnl',1,'p_space_nl','parser.py',358),
+  ('list -> VARNAME space','list',2,'p_list','parser.py',365),
+  ('list -> list , space VARNAME space','list',5,'p_list','parser.py',366),
+  ('declist -> VARNAME SPACES list','declist',3,'p_dec_list','parser.py',377),
+  ('declist -> VARNAME STARS SPACES list','declist',4,'p_dec_list','parser.py',378),
+  ('declist -> declist nl VARNAME SPACES list','declist',5,'p_dec_list','parser.py',379),
+  ('declist -> declist nl VARNAME STARS SPACES list','declist',6,'p_dec_list','parser.py',380),
+  ('structs -> spnl STRT : nl','structs',4,'p_structs','parser.py',405),
+  ('structs -> structs VARNAME space { spnl declist spnl } nl','structs',9,'p_structs','parser.py',406),
+  ('structs -> structs VARNAME space { spnl } nl','structs',7,'p_structs','parser.py',407),
+  ('global_sec -> spnl GLOBALS : nl','global_sec',4,'p_global_sec','parser.py',422),
+  ('global_sec -> global_sec vardec nl','global_sec',3,'p_global_sec','parser.py',423),
+  ('global_sec -> global_sec nl','global_sec',2,'p_global_sec','parser.py',424),
+  ('prog -> structs global_sec func tac spnl','prog',5,'p_prog','parser.py',429),
+  ('prog -> structs func tac spnl','prog',4,'p_prog','parser.py',430),
 ]

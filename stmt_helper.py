@@ -15,11 +15,7 @@ class stmt_types:
     GOT = 4
     CAL = 5
     IF = 6
-<<<<<<< HEAD
-    RET = 7
-=======
->>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
-
+    
 class stmt:
     def __init__(self) -> None:
         self.stmtType = -1
@@ -246,14 +242,8 @@ class call(stmt):
         return self.funcName+self.input_params
     
     def add_funcID(self, id:str) -> None:
-<<<<<<< HEAD
-        # Args are resolved at parse time with correct names already.
-        # Mangling them again here would corrupt variable names.
-        pass
-=======
         for arg in self.args:
             arg.add_funcID(id)
->>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
 
 class cond(stmt):
     def __init__(self, condition:variable|boolExp, lno:number) -> None:
@@ -271,23 +261,4 @@ class cond(stmt):
         self.lno = lno
     
     def add_funcID(self, id:str) -> None:
-<<<<<<< HEAD
         self.cond.add_funcID(id)
-
-class ret(stmt):
-    """return <var> — returns a pointer variable from a function to the caller."""
-    def __init__(self, var:variable) -> None:
-        self.var = var
-        self.stmtType = stmt_types.RET
-
-    def get_display_stmt(self) -> str:
-        return 'return ' + self.var.get_display_value()
-
-    def get_var(self) -> variable:
-        return self.var
-
-    def add_funcID(self, id:str) -> None:
-        self.var.add_funcID(id)
-=======
-        self.cond.add_funcID(id)
->>>>>>> 7986d73d2cc82cd3fb397e72dd88cb7b08d26089
