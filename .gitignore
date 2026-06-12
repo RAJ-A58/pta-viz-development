@@ -4,3 +4,5 @@ results/
 *.png
 *.svg
 !images/*
+__pycache__/
+*.pyc
